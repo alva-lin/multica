@@ -38,9 +38,11 @@ COPY packages/ui/ ./packages/ui/
 COPY packages/views/ ./packages/views/
 COPY packages/tsconfig/ ./packages/tsconfig/
 
-# Build-time env: empty means same-origin (reverse proxy handles routing)
-ENV NEXT_PUBLIC_API_URL=""
-ENV NEXT_PUBLIC_WS_URL=""
+# Build-time args: passed from docker compose build
+ARG NEXT_PUBLIC_API_URL=""
+ARG NEXT_PUBLIC_WS_URL=""
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV NEXT_PUBLIC_WS_URL=${NEXT_PUBLIC_WS_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm --filter @multica/web build
