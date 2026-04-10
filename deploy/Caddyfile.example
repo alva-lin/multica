@@ -1,0 +1,27 @@
+# Add this block to your existing Caddy configuration.
+# Adjust the domain and ports to match your deploy/.env settings.
+
+multica.example.com {
+    # API & Auth → Go server
+    handle /api/* {
+        reverse_proxy localhost:8080
+    }
+    handle /auth/* {
+        reverse_proxy localhost:8080
+    }
+
+    # WebSocket → Go server
+    handle /ws {
+        reverse_proxy localhost:8080
+    }
+
+    # Health check → Go server
+    handle /health {
+        reverse_proxy localhost:8080
+    }
+
+    # Everything else → Next.js
+    handle {
+        reverse_proxy localhost:3000
+    }
+}
